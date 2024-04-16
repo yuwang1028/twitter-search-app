@@ -35,7 +35,7 @@ def connect_mysql_via_ssh(ssh_config, mysql_config):
     
     # Since we cannot directly return a mysql.connector connection, you would normally open the tunnel here
     # For simulation, we'll execute the command (not recommended for actual use due to security concerns of password in command)
-    result = subprocess.run(ssh_command, shell=True, capture_output=True, text=True)
+    result = subprocess.run(ssh_command, shell=False, capture_output=True, text=True)
     
     if result.returncode == 0:
         print("SSH Tunnel established and connected to MySQL")
