@@ -1,1 +1,1 @@
-python3 process relational.py
+python3 process_relational.py
