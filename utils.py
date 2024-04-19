@@ -4,6 +4,7 @@ from configparser import ConfigParser
 import mysql.connector
 import pymongo
 from pymongo import MongoClient
+from pymongo.errors import ConnectionFailure
 
 def getConfig(filename='config.ini', section='default'):
     """ Read database configuration file and return a dictionary object """
@@ -37,23 +38,32 @@ def connect_to_mysql():
         return None
 
 
+
 def connect_to_mongodb():
-    """ Creates a connection to a MongoDB database using the configuration values read from a 'config.ini' file. """
-    config = getConfig(section='mongodb')
+    """
+    Connect to MongoDB database using configuration from config.ini
+    
+    Returns:
+        MongoClient object that can be used to interact with the database.
+    """
+    # Use getConfig to load the MongoDB configuration from the 'mongodb' section
     try:
-        print('Connecting to the MongoDB database...')
-        client = MongoClient(
-            host=config['host'],
-            port=int(config['port']),
-            username=config['user'],
-            password=config['password'],
-            authSource=config['authSource']  # usually 'admin'
-        )
-        # Verifying the MongoDB connection
-        print('Connection established to MongoDB.')
-        return client
-    except pymongo.errors.ConnectionFailure as e:
-        print(f"Could not connect to MongoDB: {e}")
+        mongodb_config = getConfig('config.ini', 'mongodb')
+        connection_string = mongodb_config['connection_string']
 
+        print('Connecting to the MongoDB Atlas database...')
+        client = MongoClient(connection_string)
 
-
+        # A simple 'ping' command to check the server is available
+        if client.admin.command('ping'):
+            print('Connection established.')
+            return client
+        else:
+            print('Connection failed.')
+            return None
+    except ConnectionFailure as e:
+        print(f"Database connection failed: {e}")
+        return None
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
