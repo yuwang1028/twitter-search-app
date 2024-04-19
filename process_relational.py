@@ -1,5 +1,5 @@
 """
-File : /scripts/relationalDB.py
+File : /scripts/process_relational.py
 
 Description:
 1. Create a MySQL database with desired tables
