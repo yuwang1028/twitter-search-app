@@ -1,3 +1,11 @@
+"""
+File : /scripts/process_nonrelational.py
+
+Description:
+1. Create a MongoDB database with desired fields
+2. Push data into our MongoDB database
+"""
+
 from utils import connect_to_mongodb  # Assuming connMongoDB is your MongoDB connection function
 import json
 import time 
