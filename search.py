@@ -118,20 +118,20 @@ def fetch_results(tweetstring, hashtags, tweetsensitivity, tweetcontenttype, sta
     # Merge and return results if any
     if not searched_tweet_metadata_user_data.empty and not searched_tweets_data.empty:
         results_df = pd.merge(searched_tweets_data, searched_tweet_metadata_user_data, left_on='id_str', right_on='tweet_id', how='inner')
-        results_df = results_df.sort_values(by=['favorite_count', 'retweet_count_x'], ascending=False) # Sorting as per favorite_count and retweets_count
+        results_df = results_df.sort_values(by=['favorite_count', 'retweet_count_x'], ascending=False) # Sorting as per scores and retweets
         return results_df
     else:
         return pd.DataFrame(['No results found'], columns=['Message'])
 
-def main():
-    # Example usage:
-    results = fetch_results("", "", "", "", '04/24/01 08:00 AM', '04/26/22 08:00 PM', "", "sivaetb", "")
-    print('######## RESULTS columns ########')
-    print(results.columns)
-    print('#################################')
-    print('######## RESULTS ########')
-    print(results)
-    print('#########################')
+# def main():
+#     # Example usage:
+#     results = fetch_results("", "", "", "", '04/24/19 08:00 AM', '04/26/22 08:00 PM', "", "sivaetb", "")
+#     print('######## RESULTS columns ########')
+#     print(results.columns)
+#     print('#################################')
+#     print('######## RESULTS ########')
+#     print(results)
+#     print('#########################')
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
