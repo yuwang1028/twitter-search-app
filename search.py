@@ -118,7 +118,7 @@ def fetch_results(tweetstring, hashtags, tweetsensitivity, tweetcontenttype, sta
     # Merge and return results if any
     if not searched_tweet_metadata_user_data.empty and not searched_tweets_data.empty:
         results_df = pd.merge(searched_tweets_data, searched_tweet_metadata_user_data, left_on='id_str', right_on='tweet_id', how='inner')
-        results_df = results_df.sort_values(by=['favorite_count', 'retweet_count_x'], ascending=False) # Sorting as per scores and retweets
+        results_df = results_df.sort_values(by=['favorite_count', 'retweet_count_x'], ascending=False) # Sorting as per favorite_count and retweets_count
         return results_df
     else:
         return pd.DataFrame(['No results found'], columns=['Message'])
