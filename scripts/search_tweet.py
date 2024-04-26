@@ -243,4 +243,4 @@ def test_fetch_functions(tweet_id):
     quoted_ids = fetch_quoted_ids(SQL_client, tweet_id)
     print("Quoted IDs:", quoted_ids)
 
-test_fetch_functions('1253949413191344128')  # replace '1234567890' with a real tweet_id from your database
+# test_fetch_functions('1253949413191344128')  # replace '1234567890' with a real tweet_id from your database

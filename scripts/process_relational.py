@@ -265,7 +265,6 @@ def pushMySQLData(cursor, filename="corona-out-3"):
                 continue  # Continue with next line in case of SQL error
             except Exception as e:
                 print(f"General Error at line {line_number}: {e}")
-            print('Works till here')  # This will print for every line processed successfully or skipped
 
 
 # Define the signal handler function
