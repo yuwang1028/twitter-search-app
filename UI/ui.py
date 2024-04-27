@@ -9,10 +9,10 @@ import asyncio
 root_folder = os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(root_folder)
 
-from scripts.search import fetch_results
-from scripts.user_search import fetch_user_results
-from scripts.tweet_search import fetch_tweet_results
-from scripts.metric_search import fetch_metric_results
+from scripts.search_query import fetch_results
+from scripts.search_user import fetch_user_results
+from scripts.search_tweet import fetch_tweet_results
+from scripts.search_metric import fetch_metric_results
 from scripts.cache import CacheManager
 from scripts.utils import pushLogs
 
@@ -118,4 +118,3 @@ def formatted_df(my_df):
 
 if __name__ == "__main__":
     app.run(port=8000,debug=True)
-

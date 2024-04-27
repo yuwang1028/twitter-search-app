@@ -1,36 +1,26 @@
 {% extends "base.html" %}
-
 {% block content %}
 <div id="performanceresultsdiv">
-    <p>Total Time taken for search to run: <strong>{{ performanceresults[0] }}</strong> seconds.</p>
+Total Time taken for search to run= {{performanceresults[0]}} seconds.
 </div>
 
-<section>
-    <h3>Tweets by User:</h3>
-    <div class="resultsdiv">
-        {{ results[0] | safe }}
-    </div>
-</section>
-
-<section>
-    <h3>Quoted Tweets by User:</h3>
-    <div class="resultsdiv">
-        {{ results[1] | safe }}
-    </div>
-</section>
-
-<section>
-    <h3>Retweets by User:</h3>
-    <div class="resultsdiv">
-        {{ results[2] | safe }}
-    </div>
-</section>
-
-<section>
-    <h3>Replies by User:</h3>
-    <div class="resultsdiv">
-        {{ results[3] | safe }}
-    </div>
-</section>
+<h3>Tweets by user:</h3>
+<div class="resultsdiv">
+{{results[0]| safe }}
+</div>
+<hr>
+<h3>Quoted Tweets by user:</h3>
+<div class="resultsdiv">
+{{results[1]| safe }}
+</div>
+<hr>
+<h3>Retweets by user:</h3>
+<div class="resultsdiv">
+    {{results[2]| safe }}
+</div>
+<hr>
+<h3>Replies by user:</h3>
+<div class="resultsdiv">
+{{results[3]| safe }}
+</div>
 {% endblock %}
-

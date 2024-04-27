@@ -1,10 +1,9 @@
 {% extends "base.html" %}
-
 {% block content %}
 <div id="performanceresultsdiv">
-    <p>Total Time taken for search to run: <strong>{{ performanceresults[0] }}</strong> seconds.</p>
+Total Time taken for search to run= {{performanceresults[0]}} seconds.
 </div>
 <div class="resultsdiv">
-    {{ results | safe }}
+{{results| safe }}
 </div>
 {% endblock %}
