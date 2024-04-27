@@ -32,7 +32,7 @@ pip3 install -r requirements.txt --no-cache-dir
 
 <br/>
 
-## 3. Add search API data to data folder
+## 3. Add search API data file () to data folder
 
 ```bash
 mkdir ./data
