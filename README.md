@@ -12,8 +12,6 @@ git clone https://github.com/yuwang1028/twitter-search-app.git
 
 ## 2. Setup python environment
 
-> **NOTE:** A quick way to implement this would be with the *venv* package. You can also setup the environment with conda using the command ```conda create -n <env_name> python=3.8 | conda activate <env_name>```. After this follow step 2.c 
-
 ### 2.a. Create a venv environment
 
 ```bash
