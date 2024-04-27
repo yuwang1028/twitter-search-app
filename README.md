@@ -32,14 +32,14 @@ pip3 install -r requirements.txt --no-cache-dir
 
 <br/>
 
-## 3. Add search API data file () to data folder
+## 3. Add search API data file (or streaming data) to scripts folder
 
 ```bash
-mkdir ./data
+cd ./scripts
 #copy data to this folder
 ```
 
-## 3. Load the SQL and NoSQL databases if data is not loaded
+## 4. Load the SQL and NoSQL databases if data is not loaded
 
 ```bash
 sh scripts/setup/main.sh
@@ -47,7 +47,7 @@ sh scripts/setup/main.sh
 
 <br/>
 
-## 4. Setup the Front End
+## 5. Setup the Front End
 
 ```bash
 python3 UI/ui.py 
@@ -57,7 +57,7 @@ Once you run this, you should see the search app @ localhost:8000
 
 <br/>
 
-## 5. Setup the periodic ttl based cacher 
+## 6. Setup the periodic ttl based cacher 
 
 ```bash
 python3 scripts/staleCacheChecker.py 
