@@ -1,7 +1,11 @@
 # DATA MANAGEMENT FOR ADVANCED DATA SCIENCE APPLICATIONS final project - team 15
 
-## STAT-694
-## team 15: HSIAO-CHUN HUNG/ YU WANG/ YUYUE SUN/ ZHUOER LIU
+## STAT-694 Github with 694, year (2024)
+## team 15: 
+HSIAO-CHUN HUNG hh617
+/ YU WANG yw1029
+/ YUYUE SUN ys898
+/ ZHUOER LIU zl413
 ## 1. Git clone the repository
 
 ```bash
