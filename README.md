@@ -1,6 +1,6 @@
 # DATA MANAGEMENT FOR ADVANCED DATA SCIENCE APPLICATIONS final project - team 15
 
-## STAT-694 Github with 694, year (2024)
+## STAT-694 at Rutgers, year (2024)
 ## team 15: 
 HSIAO-CHUN HUNG hh617
 / YU WANG yw1029
