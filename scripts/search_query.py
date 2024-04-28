@@ -83,32 +83,53 @@ def fetch_searched_tweets_data(NoSQL_client, tweetstring, hashtags, tweetsensiti
     searched_tweets_data = pd.DataFrame(list(tweet_data))
     return searched_tweets_data
 
+from scripts.cache import CacheManager
+import pandas as pd
+import asyncio
+
 def fetch_results(username, userscreenname, userverification, tweetstring, hashtags, tweetsensitivity, tweetcontenttype, start_datetime, end_datetime):
-    SQL_client = connect_to_mysql()
-    NoSQL_client = connect_to_mongodb()
-    filtered_tweet_ids = []
-    filtered_user_ids = []
+    cache_manager = CacheManager()
+    search_query = {
+        "username": username,
+        "userscreenname": userscreenname,
+        "userverification": userverification,
+        "tweetstring": tweetstring,
+        "hashtags": hashtags,
+        "tweetsensitivity": tweetsensitivity,
+        "tweetcontenttype": tweetcontenttype,
+        "start_datetime": start_datetime,
+        "end_datetime": end_datetime
+    }
 
-    # Search flow: Relational -> Non-relational
-    if username or userscreenname:
-        searched_tweet_metadata_user_data = fetch_searched_tweet_metadata_user_data(SQL_client, username, userscreenname, userverification, start_datetime, end_datetime, filtered_tweet_ids, filtered_user_ids)
-        # print('------->', searched_tweet_metadata_user_data)
-        if not searched_tweet_metadata_user_data.empty:
-            filtered_tweet_ids = searched_tweet_metadata_user_data['tweet_id'].tolist()
-        # print('------->', filtered_tweet_ids)
-        searched_tweets_data = fetch_searched_tweets_data(NoSQL_client, tweetstring, hashtags, tweetsensitivity, tweetcontenttype, start_datetime, end_datetime, filtered_tweet_ids)
-        # print('---->', searched_tweets_data)
-    # Search flow: Non-relational -> Relational
+    if search_query in cache_manager:
+        # If the search query is in cache, retrieve cached data
+        cached_data = cache_manager.getQuery(search_query)
+        results_df = pd.DataFrame(cached_data)
     else:
-        searched_tweets_data = fetch_searched_tweets_data(NoSQL_client, tweetstring, hashtags, tweetsensitivity, tweetcontenttype, start_datetime, end_datetime, filtered_tweet_ids)
-        if not searched_tweets_data.empty:
-            filtered_user_ids = searched_tweets_data['user_id'].tolist()
-        searched_tweet_metadata_user_data = fetch_searched_tweet_metadata_user_data(SQL_client, username, userscreenname, userverification, start_datetime, end_datetime, filtered_tweet_ids, filtered_user_ids)
+        # If the search query is not in cache, perform database queries
+        SQL_client = connect_to_mysql()
+        NoSQL_client = connect_to_mongodb()
+        # Assuming start_datetime and end_datetime are already formatted as required for SQL query.
+        filtered_tweet_ids = []  # Assuming this list will be populated based on some condition
+        filtered_user_ids = []   # Assuming this list will be populated based on some condition
 
-    # Merge and return results if any
-    if not searched_tweet_metadata_user_data.empty and not searched_tweets_data.empty:
-        results_df = pd.merge(searched_tweets_data, searched_tweet_metadata_user_data, left_on='id_str', right_on='tweet_id', how='inner')
-        results_df = results_df.sort_values(by=['favorite_count', 'retweet_count_x'], ascending=False) # Sorting as per favorite_count and retweets
-        return results_df
-    else:
-        return pd.DataFrame(['No results found'], columns=['Message'])
+        # Perform the SQL and NoSQL queries
+        tweet_metadata_user_data = fetch_searched_tweet_metadata_user_data(SQL_client, username, userscreenname, userverification, start_datetime, end_datetime, filtered_tweet_ids, filtered_user_ids)
+        tweets_data = fetch_searched_tweets_data(NoSQL_client, tweetstring, hashtags, tweetsensitivity, tweetcontenttype, start_datetime, end_datetime, filtered_tweet_ids)
+
+        # Combine the results into a single DataFrame
+        if not tweet_metadata_user_data.empty and not tweets_data.empty:
+            results_df = pd.merge(tweets_data, tweet_metadata_user_data, how='inner', left_on='id_str', right_on='tweet_id')
+        elif not tweet_metadata_user_data.empty:
+            results_df = tweet_metadata_user_data
+        elif not tweets_data.empty:
+            results_df = tweets_data
+        else:
+            results_df = pd.DataFrame(['No results found'], columns=['Message'])
+
+        # After getting the results, put them in the cache
+        if not results_df.empty:
+            cache_manager.putQuery(search_query, results_df.to_dict('records'))
+            asyncio.run(cache_manager.saveCache())
+
+    return results_df
