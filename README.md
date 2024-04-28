@@ -9,7 +9,7 @@ HSIAO-CHUN HUNG hh617
 ## 1. Git clone the repository
 
 ```bash
-git clone[https://github.com/yuwang1028/694_Team15_DBMS_2024/tree/main]
+git clone[https://github.com/yuwang1028/694_Team15_DBMS_2024]
 ```
 
 <br/>
