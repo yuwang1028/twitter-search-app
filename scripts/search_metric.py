@@ -8,7 +8,7 @@ import numpy as np
 from utils import connect_to_mysql, connect_to_mongodb
 
 def top_users_by_followers(SQL_client):
-    query=f'''SELECT u.*
+    query='''SELECT u.*
             FROM user_profile u
 			ORDER BY u.followers_count DESC LIMIT 10'''
     results_df=pd.read_sql_query(query,con=SQL_client)
